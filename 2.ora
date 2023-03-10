@@ -1,0 +1,89 @@
+*&---------------------------------------------------------------------*
+*& Report  ZDE_OKT_MD_02
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT ZDE_OKT_MD_02.
+
+*PARAMETERS pont type i.
+*
+*WRITE: pont, ': '.
+
+*CASE pont.
+*  WHEN 1. WRITE: 'Egyes'.
+*  WHEN 2. WRITE: 'Kettes'.
+*  WHEN 3. WRITE: 'Hármas'.
+*  WHEN 4. WRITE: 'Négyes'.
+*  WHEN 5. WRITE: 'Ötös'.
+*  WHEN OTHERS. WRITE: 'Hibás adat'.
+*ENDCASE.
+
+*PARAMETERS: szam1 TYPE i, szam2 TYPE i.
+*PARAMETERS: operator TYPE c LENGTH 1.
+*
+*DATA: eredmeny TYPE p DECIMALS 10.
+*
+*CASE operator.
+*  WHEN '+'. eredmeny = szam1 + szam2.
+*  WHEN '-'. eredmeny = szam1 - szam2.
+*  WHEN '/'.
+*    IF szam2 <> 0.
+*      eredmeny = szam1 / szam2.
+*    ELSE.
+*      eredmeny = 0.
+*    ENDIF.
+*  WHEN '%'.
+*    IF szam2 <> 0.
+*      eredmeny = szam1 MOD szam2.
+*    ELSE.
+*      eredmeny = 0.
+*    ENDIF.
+*  WHEN OTHERS. eredmeny = 0.
+*ENDCASE.
+*
+*WRITE: 'Eredmény: ', eredmeny.
+
+*DATA: honap TYPE i.
+*honap = sy-datum+4(2).
+*
+*CASE honap.
+*  WHEN 12 OR 01 OR 02. WRITE: 'Tél'.
+*  WHEN 03 OR 04 OR 05. WRITE: 'Tavasz'.
+*  WHEN 06 OR 07 OR 08. WRITE: 'Nyár'.
+*  WHEN OTHERS. WRITE: 'Ősz'.
+*ENDCASE.
+
+*
+*DATA negyzet TYPE i.
+*DO 10 TIMES.
+*  negyzet = sy-index ** 2.
+*  WRITE: 'Szam: ', sy-index, / 'négyzet:', negyzet UNDER sy-index, /.
+*ENDDO.
+
+*PARAMETERS szam TYPE i.
+*DATA: prim TYPE i VALUE 1.
+*DO szam / 2 TIMES.
+*  IF szam MOD sy-index = 0 AND sy-index <> 1.
+*    WRITE sy-index.
+*    prim = 0.
+*  ENDIF.
+*ENDDO.
+*
+*IF prim = 1.
+*  WRITE 'prim'.
+*ELSE.
+*  WRITE 'nem prim'.
+*ENDIF.
+
+*PARAMETERS a TYPE i.
+*
+*DO a TIMES.
+*  IF sy-index MOD 2 = 0.
+*    CONTINUE.
+*  ENDIF.
+*  CHECK sy-index MOD 3 = 0.
+*  WRITE sy-index.
+*ENDDO.
