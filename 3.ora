@@ -1,0 +1,177 @@
+*&---------------------------------------------------------------------*
+*& Report  ZDE_OKT_SZD_03
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+*
+*REPORT ZDE_OKT_SZD_03.
+*
+*DATA str(20) VALUE 'SAP EGY ERP RENDSZER'.
+*WRITE str.
+*DATA: s1(3), s2(3), s3(3), s4(8).
+*SPLIT str AT ' ' INTo s1 s2 s3 s4.
+*WRITE: / s1, / s2, / s3, / s4.
+*
+*SEARCH str FOR s3.
+*WRITE / sy-fdpos.
+*
+*DATA str1(100).
+*CONCATENATE s1 s2 s3 s4 INTo str1 SEPARATED BY ' '.
+*
+*WRITE / str1.
+*
+*TRANSLATE str1 TO LOWER CASE.
+*WRITE / str1.
+*
+*TRANSLATE str1 TO UPPER CASE.
+*WRITE / str1.
+*
+*DATA len TYPE i.
+*len = strlen( str1 ).
+*WRITE: / 'String hossza = ', len.
+*
+*DATA str2(200) TYPE c VALUE ' Egy    kettő           három                    négy         '.
+*len = strlen( str2 ).
+*WRITE: / str2, / 'String hossza = ', len.
+*
+*CONDENSE str2.
+*len = strlen( str2 ).
+*WRITE: / str2, / 'String hossza = ', len.
+*
+*CONDENSE str2 NO-GAPS.
+*len = strlen( str2 ).
+*WRITE: / str2, / 'String hossza = ', len.
+*
+*DATA s5(10) VALUE 'ORACLE'.
+*
+*REPLACE 'SAP' IN str1 WITH s5.
+*
+*WRITE / str1.
+*
+*ABS(n) - abszolutérték
+*CEIL(n) - következő egész szám ami nagyobb a megadottnál
+*FLOAT(str) - lebegőpontossá alakit
+*HEX(str) - hexába
+*INT(str) - intbe
+*LIMIT(lower,n,upper) - korlátozza a számot
+*MAX (number list) - szám lista maximumát adja vissza
+*MIN( number LIST) - minimumát
+*
+*TYPES: BEGIN OF countries,
+*  c_id type i,
+*  c_name type c length 40,
+*  c_continent type c length 30,
+*END OF countries.
+*
+*DATA: c1 TYPE countries, c2 TYPE countries, c3 TYPE countries.
+*
+*c1-c_id = 1.
+*c1-c_name = 'Hungary'.
+*c1-c_continent = 'Europe'.
+*
+*c2-c_id = 2.
+*c2-c_name = 'Austria'.
+*c2-c_continent = 'Europe'.
+*
+*
+*MOVE-CORRESPONDING c1 TO c3.
+*
+*WRITE: / c2-c_id, c2-c_name, c2-c_continent, / c3-c_id, c3-c_name, c3-c_continent.
+*
+*data st_tab1 type STANDARD TABLE OF countries with NON-UNIQUE KEY c_id.
+*
+*DATA: BEGIN OF sor,
+*  sorszam TYPE i,
+*  kod TYPE i,
+*  nev TYPE c LENGTH 20,
+*  mennyiseg TYPE c LENGTH 2,
+*  END OF sor.
+*
+*DATA: tabla LIKE STANDARD TABLE OF sor,
+*      db TYPE i.
+*
+*DO 3 TIMES.
+*  sor-sorszam = sy-index.
+*  sor-kod = sy-index ** 2.
+*  sor-nev = 'alma'.
+*  sor-mennyiseg = 'kg'.
+*  APPEND sor TO tabla.
+*ENDDO.
+*
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*LOOP AT tabla INTO sor.
+*  sor-sorszam = sy-tabix.
+*  sor-kod = sy-tabix * 3.
+*  sor-nev = 'korte'.
+*  sor-mennyiseg = 'kg'.
+*  INSERT sor INTO tabla.
+*ENDLOOP.
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*sor-sorszam = 3.
+*sor-kod = 9.
+*sor-nev = 'rostos-narancs'.
+*sor-mennyiseg = 'L'.
+*INSERT sor INTO tabla INDEX 2.
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*LOOP AT tabla INTO sor.
+*  IF sor-sorszam = 3.
+*    sor-kod = 18.
+*    sor-nev = 'narancsle'.
+*    sor-mennyiseg = 'L'.
+*    MODIFY tabla FROM sor.
+*  ENDIF.
+*ENDLOOP.
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*LOOP AT tabla INTO sor.
+*  IF sor-nev = 'alma'.
+*    db = db + 1.
+*  ENDIF.
+*ENDLOOP.
+*
+*WRITE: / 'Alma: ', db.
+*ULINE.
+*
+*SORT tabla BY nev.
+*
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*LOOP AT tabla INTO sor WHERE kod = 4.
+*  DELETE tabla.
+*ENDLOOP.
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
+*
+*LOOP AT tabla INTO sor.
+*  IF sor-mennyiseg = 'kg'.
+*    sor-mennyiseg = 'db'.
+*    MODIFY tabla FROM sor.
+*  ENDIF.
+*ENDLOOP.
+*
+*LOOP AT tabla INTO sor.
+*  WRITE: / sor-sorszam, sor-kod, sor-nev, sor-mennyiseg.
+*ENDLOOP.
+*ULINE.
